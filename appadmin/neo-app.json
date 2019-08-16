@@ -1,0 +1,51 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "srv_api/",
+      "target": {
+        "type": "destination",
+        "name": "destination-placeholder",
+        "entryPath": "/"
+      },
+      "description": "Dummy destination to be mapped to a real destination when running the application (hc_destmapping URL parameter)"
+    },
+    {
+      "path": "/webapp/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/webapp/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    }
+  ],
+  "sendWelcomeFileRedirect": true
+}

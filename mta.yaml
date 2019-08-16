@@ -23,6 +23,25 @@ modules:
     requires:
       - name: bookshop-nodejs-db-hdi-container
       - name: bookshop-nodejs-uaa
+
+  - name: bookshop-nodejs-appadmin
+    type: html5
+    path: appadmin
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: uaa_bookshop-nodejs
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+
 resources:
   - name: bookshop-nodejs-db-hdi-container
     type: com.sap.xs.hdi-container

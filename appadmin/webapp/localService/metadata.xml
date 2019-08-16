@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+		<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema Namespace="AdminService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<EntityContainer Name="EntityContainer">
+				<EntitySet Name="Authors" EntityType="AdminService.Authors">
+					<NavigationPropertyBinding Path="books" Target="Books"/>
+				</EntitySet>
+				<EntitySet Name="Books" EntityType="AdminService.Books">
+					<NavigationPropertyBinding Path="author" Target="Authors"/>
+					<NavigationPropertyBinding Path="currency" Target="Currencies"/>
+					<NavigationPropertyBinding Path="texts" Target="Books_texts"/>
+					<NavigationPropertyBinding Path="localized" Target="Books_texts"/>
+				</EntitySet>
+				<EntitySet Name="Books_texts" EntityType="AdminService.Books_texts"/>
+				<EntitySet Name="Currencies" EntityType="AdminService.Currencies">
+					<NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+					<NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+				</EntitySet>
+				<EntitySet Name="Currencies_texts" EntityType="AdminService.Currencies_texts"/>
+				<EntitySet Name="OrderItems" EntityType="AdminService.OrderItems">
+					<NavigationPropertyBinding Path="parent" Target="Orders"/>
+					<NavigationPropertyBinding Path="book" Target="Books"/>
+					<NavigationPropertyBinding Path="SiblingEntity" Target="OrderItems"/>
+				</EntitySet>
+				<EntitySet Name="Orders" EntityType="AdminService.Orders">
+					<NavigationPropertyBinding Path="Items" Target="OrderItems"/>
+					<NavigationPropertyBinding Path="currency" Target="Currencies"/>
+					<NavigationPropertyBinding Path="SiblingEntity" Target="Orders"/>
+				</EntitySet>
+			</EntityContainer>
+			<EntityType Name="Authors">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="name" Type="Edm.String" MaxLength="111"/>
+				<Property Name="dateOfBirth" Type="Edm.Date"/>
+				<Property Name="dateOfDeath" Type="Edm.Date"/>
+				<Property Name="placeOfBirth" Type="Edm.String"/>
+				<Property Name="placeOfDeath" Type="Edm.String"/>
+				<NavigationProperty Name="books" Type="Collection(AdminService.Books)" Partner="author"/>
+			</EntityType>
+			<EntityType Name="Books">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="title" Type="Edm.String" MaxLength="111"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1111"/>
+				<NavigationProperty Name="author" Type="AdminService.Authors" Partner="books">
+					<ReferentialConstraint Property="author_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<Property Name="stock" Type="Edm.Int32"/>
+				<Property Name="price" Type="Edm.Decimal" Scale="2" Precision="9"/>
+				<NavigationProperty Name="currency" Type="AdminService.Currencies">
+					<ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+				</NavigationProperty>
+				<NavigationProperty Name="texts" Type="Collection(AdminService.Books_texts)">
+					<OnDelete Action="Cascade"/>
+				</NavigationProperty>
+				<NavigationProperty Name="localized" Type="AdminService.Books_texts">
+					<ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<Property Name="author_ID" Type="Edm.Int32"/>
+				<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+			</EntityType>
+			<EntityType Name="Books_texts">
+				<Key>
+					<PropertyRef Name="locale"/>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="locale" Type="Edm.String" MaxLength="5" Nullable="false"/>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="title" Type="Edm.String" MaxLength="111"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1111"/>
+			</EntityType>
+			<EntityType Name="Currencies">
+				<Key>
+					<PropertyRef Name="code"/>
+				</Key>
+				<Property Name="name" Type="Edm.String" MaxLength="255"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+				<Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+				<Property Name="symbol" Type="Edm.String" MaxLength="2"/>
+				<NavigationProperty Name="texts" Type="Collection(AdminService.Currencies_texts)">
+					<OnDelete Action="Cascade"/>
+				</NavigationProperty>
+				<NavigationProperty Name="localized" Type="AdminService.Currencies_texts">
+					<ReferentialConstraint Property="code" ReferencedProperty="code"/>
+				</NavigationProperty>
+			</EntityType>
+			<EntityType Name="Currencies_texts">
+				<Key>
+					<PropertyRef Name="locale"/>
+					<PropertyRef Name="code"/>
+				</Key>
+				<Property Name="locale" Type="Edm.String" MaxLength="5" Nullable="false"/>
+				<Property Name="name" Type="Edm.String" MaxLength="255"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+				<Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+			</EntityType>
+			<EntityType Name="DraftAdministrativeData">
+				<Key>
+					<PropertyRef Name="DraftUUID"/>
+				</Key>
+				<Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="CreationDateTime" Type="Edm.DateTimeOffset"/>
+				<Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+				<Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+				<Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset"/>
+				<Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+				<Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+				<Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+			</EntityType>
+			<EntityType Name="OrderItems">
+				<Key>
+					<PropertyRef Name="ID"/>
+					<PropertyRef Name="IsActiveEntity"/>
+				</Key>
+				<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+				<NavigationProperty Name="parent" Type="AdminService.Orders" Partner="Items">
+					<ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<NavigationProperty Name="book" Type="AdminService.Books">
+					<ReferentialConstraint Property="book_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<Property Name="amount" Type="Edm.Int32"/>
+				<Property Name="netAmount" Type="Edm.Decimal" Scale="2" Precision="9"/>
+				<Property Name="parent_ID" Type="Edm.Guid"/>
+				<Property Name="book_ID" Type="Edm.Int32"/>
+				<Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+				<Property Name="HasActiveEntity" Type="Edm.Boolean"/>
+				<Property Name="HasDraftEntity" Type="Edm.Boolean"/>
+				<NavigationProperty Name="DraftAdministrativeData" Type="AdminService.DraftAdministrativeData" ContainsTarget="true"/>
+				<NavigationProperty Name="SiblingEntity" Type="AdminService.OrderItems"/>
+			</EntityType>
+			<EntityType Name="Orders">
+				<Key>
+					<PropertyRef Name="ID"/>
+					<PropertyRef Name="IsActiveEntity"/>
+				</Key>
+				<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="OrderNo" Type="Edm.String"/>
+				<NavigationProperty Name="Items" Type="Collection(AdminService.OrderItems)" Partner="parent">
+					<OnDelete Action="Cascade"/>
+				</NavigationProperty>
+				<Property Name="total" Type="Edm.Decimal" Scale="2" Precision="9"/>
+				<NavigationProperty Name="currency" Type="AdminService.Currencies">
+					<ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+				</NavigationProperty>
+				<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+				<Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+				<Property Name="HasActiveEntity" Type="Edm.Boolean"/>
+				<Property Name="HasDraftEntity" Type="Edm.Boolean"/>
+				<NavigationProperty Name="DraftAdministrativeData" Type="AdminService.DraftAdministrativeData" ContainsTarget="true"/>
+				<NavigationProperty Name="SiblingEntity" Type="AdminService.Orders"/>
+			</EntityType>
+			<Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+				<Parameter Name="in" Type="AdminService.OrderItems"/>
+				<Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+				<ReturnType Type="AdminService.OrderItems"/>
+			</Action>
+			<Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+				<Parameter Name="in" Type="AdminService.Orders"/>
+				<Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+				<ReturnType Type="AdminService.Orders"/>
+			</Action>
+			<Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+				<Parameter Name="in" Type="AdminService.Orders"/>
+				<ReturnType Type="AdminService.Orders"/>
+			</Action>
+			<Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+				<Parameter Name="in" Type="AdminService.Orders"/>
+				<Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+				<ReturnType Type="AdminService.Orders"/>
+			</Action>
+			<Annotations Target="AdminService.Authors/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Authors/createdAt">
+				<Annotation Term="Common.Label" String="Created At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Authors/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Authors/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Books/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Books/createdAt">
+				<Annotation Term="Common.Label" String="Created At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Books/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Books/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Books/currency">
+				<Annotation Term="Common.Label" String="Currency"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Currency"/>
+						<PropertyValue Property="CollectionPath" String="Currencies"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+									<PropertyValue Property="ValueListProperty" String="code"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.Books/currency_code">
+				<Annotation Term="Common.Label" String="Currency"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Currency"/>
+						<PropertyValue Property="CollectionPath" String="Currencies"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+									<PropertyValue Property="ValueListProperty" String="code"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.Currencies">
+				<Annotation Term="UI.Identification">
+					<Collection>
+						<Path>name</Path>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.Currencies/name">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations Target="AdminService.Currencies/descr">
+				<Annotation Term="Common.Label" String="Description"/>
+			</Annotations>
+			<Annotations Target="AdminService.Currencies_texts/name">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations Target="AdminService.Currencies_texts/descr">
+				<Annotation Term="Common.Label" String="Description"/>
+			</Annotations>
+			<Annotations Target="AdminService.EntityContainer/OrderItems">
+				<Annotation Term="Common.DraftNode">
+					<Record Type="Common.DraftNodeType">
+						<PropertyValue Property="PreparationAction" String="AdminService.draftPrepare"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.EntityContainer/Orders">
+				<Annotation Term="Common.DraftRoot">
+					<Record Type="Common.DraftRootType">
+						<PropertyValue Property="ActivationAction" String="AdminService.draftActivate"/>
+						<PropertyValue Property="EditAction" String="AdminService.draftEdit"/>
+						<PropertyValue Property="PreparationAction" String="AdminService.draftPrepare"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/createdAt">
+				<Annotation Term="Common.Label" String="Created At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/OrderNo">
+				<Annotation Term="Common.Label" String="Order Number"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/total">
+				<Annotation Term="Core.Computed" Bool="true"/>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/currency">
+				<Annotation Term="Common.Label" String="Currency"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Currency"/>
+						<PropertyValue Property="CollectionPath" String="Currencies"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+									<PropertyValue Property="ValueListProperty" String="code"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AdminService.Orders/currency_code">
+				<Annotation Term="Common.Label" String="Currency"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Currency"/>
+						<PropertyValue Property="CollectionPath" String="Currencies"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+									<PropertyValue Property="ValueListProperty" String="code"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
