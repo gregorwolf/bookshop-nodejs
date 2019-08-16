@@ -31,7 +31,7 @@ resources:
   - name: bookshop-nodejs-uaa
     type: org.cloudfoundry.managed-service
     parameters:
-      service-plan: default
+      service-plan: application
       service: xsuaa
       config:
         xsappname: bookshop-nodejs-${space}
