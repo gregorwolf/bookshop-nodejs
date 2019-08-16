@@ -1,0 +1,38 @@
+ID: bookshop-nodejs
+_schema-version: "2.1"
+version: 0.0.1
+modules:
+  - name: bookshop-nodejs-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      - name: bookshop-nodejs-db-hdi-container
+  - name: bookshop-nodejs-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 256M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: bookshop-nodejs-db-hdi-container
+      - name: bookshop-nodejs-uaa
+resources:
+  - name: bookshop-nodejs-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+  - name: bookshop-nodejs-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: default
+      service: xsuaa
+      config:
+        xsappname: bookshop-nodejs-${space}
+        tenant-mode: dedicated
