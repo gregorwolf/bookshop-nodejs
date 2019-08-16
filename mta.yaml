@@ -33,7 +33,7 @@ modules:
     build-parameters:
        builder: grunt
     requires:
-     - name: uaa_bookshop-nodejs
+     - name: bookshop-nodejs-uaa
      - name: srv_api
        group: destinations
        properties:
