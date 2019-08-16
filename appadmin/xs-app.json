@@ -8,7 +8,7 @@
     {
       "source": "/srv_api/(.*)$",
       "target": "$1",
-      "authenticationType": "none",
+      "authenticationType": "xsuaa",
       "destination": "srv_api",
       "csrfProtection": false
     },
