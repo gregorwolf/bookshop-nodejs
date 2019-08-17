@@ -14,7 +14,10 @@
     "dependencies": {
         "@sap/cds": "^3.13.0",
         "express": "^4.17.1",
-        "hdb": "^0.17.0"
+        "hdb": "^0.17.0",
+	    "compression": "^1.7.4",
+	    "helmet": "^3.19.0",
+	    "passport": "^0.4.0"
     },
     "devDependencies": {},
     "scripts": {

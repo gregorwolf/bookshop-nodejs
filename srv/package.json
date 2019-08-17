@@ -5,7 +5,10 @@
     "dependencies": {
         "@sap/cds": "^3.13.0",
         "express": "^4.17.1",
-        "hdb": "^0.17.0"
+        "hdb": "^0.17.0",
+	    "compression": "^1.7.4",
+	    "helmet": "^3.19.0",
+	    "passport": "^0.4.0"
     },
     "engines": {
         "node": "^8.9",
@@ -14,7 +17,8 @@
     "devDependencies": {},
     "scripts": {
         "postinstall": "npm dedupe && node .build.js",
-        "start": "node ./node_modules/@sap/cds/bin/cds.js serve gen/csn.json",
+        "start-cds": "node ./node_modules/@sap/cds/bin/cds.js serve gen/csn.json",
+        "start": "node server.js",
         "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
     },
     "private": true,
