@@ -1,7 +1,9 @@
-const app = require('express')()
-const helmet = require('helmet')
+const app         = require('express')()
+const helmet      = require('helmet')
 const compression = require('compression')
-const cds = require('@sap/cds')
+const cds         = require('@sap/cds')
+const xsenv       = require('@sap/xsenv')
+const JWTStrategy = require('@sap/xssec').JWTStrategy
 
 app.use(helmet())
 app.use(compression({ threshold: '512b' }))
@@ -25,5 +27,17 @@ app.loaded.push(
     .at('catalog/')
     .catch(console.error)
 )
+
+// Test Endpoint for authentication
+const services = xsenv.getServices({ uaa:'bookshop-nodejs' })
+
+passport.use(new JWTStrategy(services.uaa))
+
+app.use(passport.initialize())
+app.use(passport.authenticate('JWT', { session: false }))
+
+app.get('auth/', function (req, res, next) {
+  res.send('Application user: ' + req.user.id)
+});
 
 module.exports = app
