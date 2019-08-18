@@ -51,6 +51,7 @@ resources:
     properties:
       hdi-container-name: ${service-name}
   - name: bookshop-nodejs-uaa
-    type: com.sap.xs.uaa-space
     parameters:
-      config-path: xs-security.json
+      path: ./xs-security.json
+      service-plan: application
+    type: com.sap.xs.uaa
