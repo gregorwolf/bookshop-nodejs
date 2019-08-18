@@ -23,5 +23,22 @@
                 }
             }
         ]
+    },
+    "authx": {
+        "passport": {
+            "strategy": "mock",
+            "users": {
+                "administrator": {
+                    "jwt": {
+                        "userInfo": {
+                            "logonName": "admin@example.com"
+                        },
+                        "scopes": [
+                            "admin"
+                        ]
+                    }
+                }
+            }
+        }
     }
 }
