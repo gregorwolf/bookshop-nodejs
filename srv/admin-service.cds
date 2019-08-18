@@ -1,6 +1,6 @@
 using my.bookshop as db from '../db/data-model';
 
-service AdminService @(requires:'authenticated-user') {
+service AdminService @(requires:'admin') {
   entity Books as projection on db.Books;
   entity Authors as projection on db.Authors;
   entity Orders as select from db.Orders;
