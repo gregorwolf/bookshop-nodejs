@@ -51,10 +51,6 @@ resources:
     properties:
       hdi-container-name: ${service-name}
   - name: bookshop-nodejs-uaa
-    type: org.cloudfoundry.managed-service
+    type: com.sap.xs.uaa-space
     parameters:
-      service-plan: application
-      service: xsuaa
-      config:
-        xsappname: bookshop-nodejs-${space}
-        tenant-mode: dedicated
+      config-path: xs-security.json
