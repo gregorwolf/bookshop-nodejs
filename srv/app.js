@@ -1,4 +1,5 @@
 const app         = require('express')()
+const passport    = require('passport');
 const helmet      = require('helmet')
 const compression = require('compression')
 const cds         = require('@sap/cds')
@@ -29,7 +30,7 @@ app.loaded.push(
 )
 
 // Test Endpoint for authentication
-const services = xsenv.getServices({ uaa:'bookshop-nodejs' })
+const services = xsenv.getServices({ uaa:'bookshop-nodejs-uaa' })
 
 passport.use(new JWTStrategy(services.uaa))
 
