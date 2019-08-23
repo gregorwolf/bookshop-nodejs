@@ -1,6 +1,6 @@
 using my.bookshop as db from '../db/data-model';
 
-service CatalogService {
+service CatalogService @(requires:'any') {
 
   @readonly entity Books as projection on db.Books excluding {
     createdBy, modifiedBy
