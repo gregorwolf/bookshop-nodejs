@@ -1,0 +1,30 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
+xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:l="sap.ui.layout"
+xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+controllerName="my.bookshop.appadmin.controller.NewAuthor">
+	<App>
+		<pages>
+			<Page title="Create New Author" showNavButton="false">
+				<content>
+					<l:VerticalLayout
+						class="sapUiContentPadding"
+						width="100%">
+						<l:content>
+							<Label text="Name" labelFor="inputName"/>
+							<Input id="inputName" value="{name}" required="true"/>
+						</l:content>
+					</l:VerticalLayout>
+				</content>
+				<footer>
+					<Bar id="bar0_1544100625085">
+						<contentRight>
+							<Button text="Save" id="button0_1544100633851" type="Accept" press="onSave"/>
+							<Button text="Cancel" id="button0_1544100633851_copy" type="Reject" press="onClosePress"/>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

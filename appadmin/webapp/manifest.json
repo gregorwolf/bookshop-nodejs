@@ -106,6 +106,13 @@
 					"target": [
 						"object"
 					]
+				},
+				{
+					"name": "NewAuthor",
+					"pattern": "NewAuthor",
+					"target": [
+						"newauthor"
+					]
 				}
 			],
 			"targets": {
@@ -114,6 +121,12 @@
 					"viewId": "worklist",
 					"viewLevel": 1,
 					"title": "{i18n>worklistViewTitle}"
+				},
+				"newauthor": {
+					"viewName": "NewAuthor",
+					"viewId": "newauthor",
+					"viewLevel": 2,
+					"title": "{i18n>objectViewTitle}"
 				},
 				"object": {
 					"viewName": "Object",
@@ -128,6 +141,12 @@
 				"notFound": {
 					"viewName": "NotFound",
 					"viewId": "notFound"
+				}
+			},
+			"additionalData": {
+				"my.bookshop.appadmin.view.NewAuthor": {
+					"routeName": "NewAuthor",
+					"entitySet": "/Authors"
 				}
 			}
 		}

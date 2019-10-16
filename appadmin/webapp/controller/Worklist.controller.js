@@ -115,6 +115,10 @@ sap.ui.define([
 			oTable.getBinding("items").refresh();
 		},
 
+
+		onNewAuthor: function (oEvent) {
+			this.getRouter().navTo("NewAuthor", {}, true);
+		},
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */

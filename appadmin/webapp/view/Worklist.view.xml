@@ -39,6 +39,7 @@
 							search=".onSearch"
 							width="auto">
 						</SearchField>
+						<Button id="newAuthorButton" press="onNewAuthor" icon="sap-icon://add" type="Transparent"/>
 					</Toolbar>
 				</headerToolbar>
 
