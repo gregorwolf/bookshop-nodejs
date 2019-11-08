@@ -19,7 +19,9 @@
         "helmet": "^3.21.2",
         "passport": "^0.4.0"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "sqlite3": "^4.1.0"
+    },
     "scripts": {
         "start": "cds run",
         "build": "cds build/all --clean",
@@ -28,11 +30,17 @@
     "cds": {
         "requires": {
             "db": {
-                "kind": "hana",
+                "kind": "sqlite",
                 "model": [
                     "db",
                     "srv"
-                ]
+                ],
+                "credentials": {
+                    "database": "bookshop.db"
+                },
+                "[production]": {
+                    "kind": "hana"
+                }
             }
         },
         "odata": {
