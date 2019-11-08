@@ -1,0 +1,10 @@
+### Read Books from Admin Service with Username "administrator"
+GET http://localhost:4004/admin/Books?$top=10
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Read User with Username "administrator"
+GET http://localhost:4004/admin/User
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+### Read User with Username "admin@example.com"
+GET http://localhost:4004/admin/User
+Authorization: Basic YWRtaW5AZXhhbXBsZS5jb206

@@ -24,6 +24,8 @@
     },
     "scripts": {
         "start": "cds run",
+        "start:local": "cds run --with-mocks",
+        "watch": "cds watch",
         "build": "cds build/all --clean",
         "deploy": "cds deploy"
     },

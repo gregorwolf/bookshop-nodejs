@@ -1,0 +1,5 @@
+### Read Books from Public Service
+GET http://localhost:4004/acatalog/Books?$top=10
+
+### Read User
+GET http://localhost:4004/acatalog/User
