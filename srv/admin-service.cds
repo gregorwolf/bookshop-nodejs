@@ -1,8 +1,8 @@
 using my.bookshop as db from '../db/data-model';
 
 service AdminService 
-// @(requires:'admin') 
-@(requires: 'identified-user')
+@(requires:'admin') 
+// @(requires: 'identified-user')
 {
   entity Books as projection on db.Books;
   entity Authors as projection on db.Authors;
