@@ -25,6 +25,7 @@
     },
     "scripts": {
         "start": "cds run",
+        "startv2": "node v2server",
         "start:local": "cds run --with-mocks",
         "watch": "cds watch",
         "build": "cds build/all --clean",

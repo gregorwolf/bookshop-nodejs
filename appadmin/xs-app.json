@@ -6,8 +6,8 @@
   },
   "routes": [
     {
-      "source": "/srv_api/(.*)$",
-      "target": "$1",
+      "source": "/admin/(.*)$",
+      "target": "/admin/$1",
       "authenticationType": "xsuaa",
       "destination": "srv_api",
       "csrfProtection": true
