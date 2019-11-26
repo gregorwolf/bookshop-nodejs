@@ -8,3 +8,31 @@ Authorization: Basic YWRtaW5pc3RyYXRvcjo=
 ### Read User with Username "admin@example.com"
 GET http://localhost:4004/admin/User
 Authorization: Basic YWRtaW5AZXhhbXBsZS5jb206
+
+### Read Orders OData V4
+GET http://localhost:4004/admin/Orders?$expand=Items
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Read Orders OData V2
+GET http://localhost:4004/v2/admin/Orders?$expand=Items
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Create Order - returns:
+### SQLITE_CONSTRAINT: NOT NULL constraint failed: AdminService_OrderItems_drafts.DraftAdministrativeData_DraftUUID
+POST http://localhost:4004/v2/admin/Orders
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+Content-Type: application/json
+Accept: application/json
+
+{ 
+  "ID": "7E2F2640-6866-4DCF-8F4D-3027AA831CAB", 
+  "OrderNo": "42", 
+  "IsActiveEntity": true,
+  "Items": [ 
+    { 
+      "ID": "58040E66-1DCD-4FFB-AB10-FDCE32028B7B",
+      "book_ID": 42, 
+      "parent_ID": "7E2F2640-6866-4DCF-8F4D-3027AA831CAB",
+      "amount": 1 } 
+  ] 
+}
