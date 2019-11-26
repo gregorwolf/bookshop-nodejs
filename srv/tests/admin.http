@@ -36,3 +36,7 @@ Accept: application/json
       "amount": 1 } 
   ] 
 }
+
+### Read Roles Expanded to  via OData V2
+http://localhost:4004/v2/admin/Role?$expand=BusinessObjects,Users
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=

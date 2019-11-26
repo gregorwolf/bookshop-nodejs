@@ -21,4 +21,23 @@ service AdminService
         has_admin_dummy: Boolean;
         has_user_dummy:  Boolean;
   }
+  
+	@odata.draft.enabled
+	entity Role
+	@(restrict: [ { grant: ['READ','WRITE'], to: 'admin' }, ]) 
+	as projection on db.Role;
+
+  //------- auto-exposed --------
+  entity Role_BusinessObjects as projection on db.Role_BusinessObject;
+  entity Role_Users as projection on db.Role_User;
+  //> these shall be removed but this would break the Fiori UI
+
+
+	entity BusinessObjects 
+	@(restrict: [ { grant: ['READ'], to: 'admin' }, ]) 
+	as projection on db.BusinessObjects;
+
+	entity Users 
+	@(restrict: [ { grant: ['READ'], to: 'admin' }, ]) 
+	as projection on db.Users;  
 }
