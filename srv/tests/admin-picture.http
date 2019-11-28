@@ -1,0 +1,38 @@
+### Requires REST Client for VS Code
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+###
+### Edit your settings.json and add the configuration from rest-client-config.json for local tests
+
+### Read Enititysets
+GET http://localhost:4004/admin/
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Read Pictures
+GET http://localhost:4004/admin/Pictures
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Create Picture
+POST http://localhost:4004/admin/Pictures
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+Accept: application/json
+Content-Type: application/json
+
+{ 
+  "ID": "da07ae51-d0d3-41e7-a737-2555a213e5a9",
+  "mediatype": "image/png" 
+}
+
+### Upload Binary
+PUT http://localhost:4004/admin/Pictures(da07ae51-d0d3-41e7-a737-2555a213e5a9)/content
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+Content-Type: image/png
+
+< ./Test.png
+
+### Read Binary
+GET http://localhost:4004/admin/Pictures(da07ae51-d0d3-41e7-a737-2555a213e5a9)/content
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=
+
+### Delete Image
+DELETE http://localhost:4004/admin/Pictures(da07ae51-d0d3-41e7-a737-2555a213e5a9) 
+Authorization: Basic YWRtaW5pc3RyYXRvcjo=

@@ -40,4 +40,6 @@ service AdminService
 	entity Users 
 	@(restrict: [ { grant: ['READ'], to: 'admin' }, ]) 
 	as projection on db.Users;  
+
+  entity Pictures as projection on db.Pictures;
 }

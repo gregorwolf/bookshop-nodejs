@@ -54,8 +54,15 @@ entity Role_BusinessObject : cuid, managed {
   parent : Association to Role;
   BusinessObject : Association to BusinessObjects;
 };
-
 entity Role_User : cuid, managed {
   parent : Association to Role;
   user : Association to Users;
 };
+
+entity Pictures {
+  key ID : UUID;
+  @Core.MediaType: mediatype
+  content : LargeBinary;
+  @Core.IsMediaType : true
+  mediatype : String;
+}
