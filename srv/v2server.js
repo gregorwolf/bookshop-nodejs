@@ -14,7 +14,7 @@ const port = process.env.PORT || 4004;
   // serve odata v4
   await cds
     .connect('db') // ensure database is connected!
-    .serve('all')
+    .serve('./gen/csn.json')
     .in(app);
 
   // serve odata v2

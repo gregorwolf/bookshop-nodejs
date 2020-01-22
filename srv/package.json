@@ -20,6 +20,7 @@
     "devDependencies": {},
     "scripts": {
         "postinstall": "npm dedupe && node .build.js",
+        "startv2": "node v2server",
         "start": "node ./node_modules/@sap/cds/bin/cds.js serve gen/csn.json",
         "start-local": "export DEBUG=X && node server.js",
         "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
