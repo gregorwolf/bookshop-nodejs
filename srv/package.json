@@ -7,7 +7,8 @@
         "@sap/xsenv": "^2.2.0",
         "@sap/xssec": "^2.2.4",
         "express": "^4.17.1",
-        "hdb": "^0.17.1",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.17",
+        "@sap/hana-client": "^2.4.177",
         "compression": "^1.7.4",
         "helmet": "^3.21.2",
         "passport": "^0.4.1"
@@ -20,7 +21,7 @@
     "scripts": {
         "postinstall": "npm dedupe && node .build.js",
         "start": "node ./node_modules/@sap/cds/bin/cds.js serve gen/csn.json",
-        "start-local": "node server.js",
+        "start-local": "export DEBUG=X && node server.js",
         "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
     },
     "private": true,
