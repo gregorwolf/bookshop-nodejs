@@ -12,9 +12,9 @@
         "srv"
     ],
     "dependencies": {
-        "@sap/cds": "^3.21.2",
-        "@sap/cds-odata-v2-adapter-proxy": "^1.4.17",
-        "@sap/hana-client": "^2.4.177",
+        "@sap/cds": "^3.21.3",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.18",
+        "@sap/hana-client": "^2.4.182",
         "compression": "^1.7.4",
         "express": "^4.17.1",
         "helmet": "^3.21.2",
@@ -29,8 +29,10 @@
         "start:local": "cds run --with-mocks",
         "watch": "cds watch",
         "build": "cds build/all --clean",
+        "build:cf": "mbt build -p=cf",
         "build:security": "cds compile srv/ --to xsuaa  > xs-security.json",
-        "deploy": "cds deploy"
+        "deploy": "cds deploy",
+        "deploy:cf": "cf deploy mta_archives/bookshop-nodejs_0.0.1.mtar"
     },
     "cds": {
         "requires": {
