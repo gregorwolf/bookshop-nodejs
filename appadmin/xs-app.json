@@ -6,12 +6,33 @@
   },
   "routes": [
     {
+      "source": "/v2/(.*)$",
+      "target": "/v2/$1",
+      "destination": "srv_api",
+      "csrfProtection": true,
+      "authenticationType": "xsuaa"
+    },
+    {
       "source": "/admin/(.*)$",
       "target": "/admin/$1",
-      "authenticationType": "xsuaa",
       "destination": "srv_api",
-      "csrfProtection": true
-    },    
+      "csrfProtection": true,
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "/api/(.*)$",
+      "target": "/api/$1",
+      "destination": "srv_api",
+      "csrfProtection": true,
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "/acatalog/(.*)$",
+      "target": "/acatalog/$1",
+      "destination": "srv_api",
+      "csrfProtection": true,
+      "authenticationType": "xsuaa"
+    },
     {
       "source": "^/appadmin/(.*)$",
       "target": "$1",
